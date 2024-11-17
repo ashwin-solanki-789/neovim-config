@@ -1,4 +1,10 @@
 vim.g.mapleader = " "
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<leader>ff', function() builtin.find_files({hidden = true}) end, {})
+
+vim.keymap.set('n', '<leader>5', vim.cmd.UndotreeToggle)
+
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
