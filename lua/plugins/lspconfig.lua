@@ -76,7 +76,7 @@ return {
             })
             require('mason').setup({})
             require('mason-lspconfig').setup({
-                ensure_installed = { 'lua_ls', 'tsserver', 'rust_analyzer', 'gopls' },
+                ensure_installed = { 'lua_ls', 'typescript-language-server', 'rust_analyzer', 'gopls' },
                 handlers = {
                     function(server_name)
                         if server_name == 'rust_analyzer' then
