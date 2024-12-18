@@ -13,7 +13,7 @@ return {
   			-- Automatically install missing parsers when entering buffer
   			-- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
   			auto_install = true,
-
+            indent = {enable = true},
   			-- List of parsel_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
 
   			highlight = {

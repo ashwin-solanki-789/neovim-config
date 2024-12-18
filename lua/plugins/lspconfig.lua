@@ -58,6 +58,9 @@ return {
             local lsp_attach = function(client, bufnr)
                 local opts = { buffer = bufnr }
                 vim.keymap.set("n", "<leader>gd", function() vim.lsp.buf.definition() end, opts)
+                vim.keymap.set("n", "<leader>gf", function() require('telescope.builtin').lsp_references() end, opts)
+                vim.keymap.set("n", "<leader>gi", function() vim.lsp.buf.implementation() end, opts)
+                vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, opts)
                 vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
                 vim.keymap.set("n", "<leader>vws", function() vim.lsp.buf.workspace_symbol() end, opts)
                 vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
@@ -76,7 +79,8 @@ return {
             })
             require('mason').setup({})
             require('mason-lspconfig').setup({
-                ensure_installed = { 'lua_ls', 'typescript-language-server', 'rust_analyzer', 'gopls' },
+                ensure_installed = { 'lua_ls', 'ts_ls', 'rust_analyzer', 'gopls'},
+                automatic_installation = true,
                 handlers = {
                     function(server_name)
                         if server_name == 'rust_analyzer' then
@@ -100,7 +104,7 @@ return {
                                     vim.keymap.set('n', '<leader>f', function() vim.lsp.buf.format() end, opts)
                                 end,
                             })
-                        elseif server_name == 'tsserver' then
+                        elseif server_name == 'ts_ls' then
                             require('lspconfig')[server_name].setup({
                                 on_attach = function(client, bufnr)
                                     -- TypeScript formatting settings
