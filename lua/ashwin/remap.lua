@@ -75,3 +75,30 @@ vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
 vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
 vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
 vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
+
+-- Tab keybinds
+vim.keymap.set('n', "<leader>t", ":tabnew<CR>", { desc = "Open new tab" })
+vim.keymap.set('n', "<leader>h", ":tabprev<CR>", { desc = "Go to previous tab" })
+vim.keymap.set('n', "<leader>l", ":tabnext<CR>", { desc = "Go to next tab" })
+
+-- Buffer key binds
+vim.keymap.set('n', "<leader>bl", ":bnext<CR>", { desc = "Go to next buffer" })
+vim.keymap.set('n', "<leader>bh", ":bprevious<CR>", { desc = "Go to previous buffer" })
+vim.keymap.set('n', "<leader>bd", ":bd<CR>", { desc = "Delete current buffer" })
+-- GO to particular buffer index
+for i = 1, 9 do
+    vim.keymap.set(
+        'n',
+        "<leader>b" .. i, ":lua SwitchToBuffer(" .. i .. ")<CR>",
+        { noremap = true, silent = true, desc = "Go to" .. i .. " buffer" }
+    )
+end
+
+function SwitchToBuffer(i)
+    local buffers = vim.fn.getbufinfo({ buflisted = 1 }) -- Get listed buffers
+    if i <= #buffers then
+        vim.cmd('buffer ' .. buffers[i].bufnr)         -- Switch to buffer
+    else
+        print("Buffer " .. i .. " does not exist")
+    end
+end
