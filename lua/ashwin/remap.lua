@@ -102,3 +102,36 @@ function SwitchToBuffer(i)
         print("Buffer " .. i .. " does not exist")
     end
 end
+
+-- Visual mode functionality
+--[[
+  VisualSubstitute:
+  Prompts for a search and replace string and performs a global substitution (with the `g` flag)
+  only within the currently selected lines in visual mode.
+
+  Keybinding (add in your vim config):
+    vnoremap <silent> <leader>sv :<C-u>lua VisualSubstitute()<CR>
+
+  Example usage:
+    1. Enter visual line mode with `V` and select multiple lines.
+    2. Press <leader>sv.
+    3. When prompted, enter:
+       Search: foo
+       Replace: bar
+    4. All instances of "foo" within the selected lines will be replaced with "bar".
+]]
+function _G.VisualSubstitute()
+  local start_line = vim.fn.line("'<")
+  local end_line = vim.fn.line("'>")
+
+  vim.fn.inputsave()
+  local search = vim.fn.input("Search: ")
+  local replace = vim.fn.input("Replace: ")
+  vim.fn.inputrestore()
+
+  search = vim.fn.escape(search, "/\\")
+  replace = vim.fn.escape(replace, "/\\")
+  local cmd = string.format(":%d,%ds/%s/%s/g", start_line, end_line, search, replace)
+  vim.cmd(cmd)
+end
+
